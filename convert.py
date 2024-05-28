@@ -1,20 +1,9 @@
 import pandas as pd
 
-# Read data
-data = pd.read_csv('Grade2Results.csv')
+# Load the Excel file
+file_path = 'Grade2Results.xlsx'
+df = pd.read_excel(file_path, sheet_name='Sheet1')
 
-# Get unique student names
-students = data['Names'].unique()
-
-# Reshape data for each student
-student_data = []
-for student in students:
-    student_df = data[data['Names'] == student].set_index('Date')
-    student_df = student_df.drop('Names', axis=1).add_prefix(f'{student}_')
-    student_data.append(student_df)
-
-# Concatenate reshaped data
-progression_data = pd.concat(student_data, axis=1)
-
-# Export to CSV
-progression_data.to_csv('progression_data.csv')
+# Save the DataFrame to a CSV file
+csv_file_path = 'Grade2Results.csv'
+df.to_csv(csv_file_path, index=False)
